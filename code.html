@@ -3,26 +3,73 @@
 <html>
   
 <head>
-   <!--The head section contains general information about the webpage.-->
-   <title>     </title>
-   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"> </script>
+   <!-- The head section contains webpage info and the Alpine.js library -->
+   <title>Outfit Color Matcher</title>
+   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+   
    <style>
-       /*The style section controls how pieces of your webpage look.*/
+       /* Simple CSS styling */
+       body { font-family: sans-serif; max-width: 400px; margin: 20px auto; padding: 10px; }
+       .box { border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+       input, select { width: 100%; padding: 8px; margin: 5px 0 10px; box-sizing: border-box; }
+       .swatch { height: 40px; margin: 5px 0 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 4px; text-shadow: 1px 1px 2px black; }
+       footer { text-align: center; font-size: 12px; color: #666; }
    </style>
 </head>
 
-
 <body>
-   <!--The body section contains the content of your webpage.-->
+   <!-- The header section -->
    <header>
-       <h2>    </h2>
+       <h2>Outfit Color Matcher</h2>
    </header>
-   <div x-data="webApp">
-   
 
+   <!-- Alpine.js Application Container -->
+   <div x-data="webApp">
+       
+       <!-- 1. INPUT CONTROLS -->
+       <div class="box">
+           <h3>1. Preferences</h3>
+
+           <!-- User types in HEX code instead of color picker -->
+           <label>Top HEX Code:</label>
+           <input type="text" x-model="topHex" placeholder="#3B82F6">
+
+           <!-- Link to find HEX codes -->
+           <p style="font-size: 13px;">Find HEX codes at <a href="https://imagecolorpicker.com" target="_blank">imagecolorpicker.com</a></p>
+
+           <!-- Style Dropdown -->
+           <label>Style Context:</label>
+           <select x-model="style">
+               <option value="Casual">Casual</option>
+               <option value="Formal">Formal</option>
+           </select>
+
+           <!-- Simple Checkbox -->
+           <label>
+               <input type="checkbox" x-model="darkPants" style="width: auto;"> Dark Pants Only
+           </label>
+       </div>
+
+       <!-- 2. COLOR SWATCH DISPLAY -->
+       <div class="box">
+           <h3>2. Outfit Swatches</h3>
+
+           <!-- Top Swatch (Background color dynamically updates using :style) -->
+           Top Color: <span x-text="topHex"></span>
+           <div class="swatch" :style="'background-color:' + topHex">Top</div>
+
+           <!-- Pants Swatch -->
+           Pants Color: <span x-text="pantsHex"></span>
+           <div class="swatch" :style="'background-color:' + pantsHex">Pants</div>
+
+           <!-- Shoes Swatch -->
+           Shoes Color: <span x-text="shoesHex"></span>
+           <div class="swatch" :style="'background-color:' + shoesHex">Shoes</div>
+       </div>
 
    </div>
   
+   <!-- Footer section from starter template -->
    <footer>
        <p>© 2026-2027<br>
        AP Computer Science Principles<br>
@@ -30,16 +77,17 @@
    </footer>
   
    <script>
-       //The script section contains the JavaScript logic
+       // JavaScript Alpine logic
        document.addEventListener('alpine:init', () => {
            Alpine.data('webApp', () => ({
-               
+               // Variables connected directly to the user inputs
+               topHex: '',
+               style: '',
+               darkPants: false,
 
-
-
-
-
-
+               // Placeholder output colors (you can add calculation logic later)
+               pantsHex: '',
+               shoesHex: ''
            }));
        });
    </script>
